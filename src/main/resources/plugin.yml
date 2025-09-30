@@ -1,0 +1,17 @@
+name: CoreProtectFix
+main: com.ssilensio.coreprotectfix.CoreProtectFixPlugin
+version: 1.0.0
+api-version: '1.20'
+load: STARTUP
+author: SsilensioCrafter
+website: https://mine.ssilensio.blog
+softdepend:
+  - CoreProtect
+description: >
+  Bridges CoreProtect chat logging on ArcLight/Mohist (no AsyncChatEvent),
+  and shims villager professions to avoid mod-profession crashes.
+
+permissions:
+  coreprotectfix.debug:
+    description: Enable extra debug logs
+    default: op

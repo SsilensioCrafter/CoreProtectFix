@@ -1,0 +1,12 @@
+# CoreProtectFix — configuration
+
+# If your hybrid lacks io.papermc.paper.event.player.AsyncChatEvent,
+# we will bridge chat logging via AsyncPlayerChatEvent to CoreProtect API.
+chat-bridge-enabled: true
+
+# Villager/ZombieVillager profession shim — neutralize exotic professions before death events
+affect-villagers: true
+affect-zombie-villagers: true
+
+# Extra debug output in console
+debug: false
