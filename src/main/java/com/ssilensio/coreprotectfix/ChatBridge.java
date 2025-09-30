@@ -31,7 +31,7 @@ final class ChatBridge implements Listener {
 
     private boolean classExists(String fqn) {
         try {
-            Class.forName(fqn, false, plugin.getClassLoader());
+            Class.forName(fqn, false, plugin.getClass().getClassLoader());
             return true;
         } catch (ClassNotFoundException e) {
             return false;

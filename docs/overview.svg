@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    <style>
+      .title { font: 700 42px 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; fill: #f8fafc; }
+      .subtitle { font: 400 22px 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; fill: #cbd5f5; }
+      .label { font: 600 18px 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; fill: #0f172a; }
+      .body { font: 400 16px 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; fill: #0f172a; }
+      .node { fill: #e2e8f0; stroke: #1e293b; stroke-width: 2; rx: 18; }
+      .arrow { fill: none; stroke: #f8fafc; stroke-width: 3; marker-end: url(#arrowhead); }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#f8fafc" />
+    </marker>
+  </defs>
+  <rect width="800" height="400" fill="url(#bg)" rx="32" />
+  <text x="50" y="80" class="title">CoreProtectFix</text>
+  <text x="50" y="120" class="subtitle">Bridge CoreProtect with modern chat pipelines</text>
+  <g transform="translate(40, 150)">
+    <rect class="node" width="200" height="120" />
+    <text x="100" y="40" text-anchor="middle" class="label">Minecraft Server</text>
+    <text x="100" y="72" text-anchor="middle" class="body">Spigot / Paper</text>
+    <text x="100" y="98" text-anchor="middle" class="body">1.20+</text>
+  </g>
+  <g transform="translate(300, 150)">
+    <rect class="node" width="200" height="120" />
+    <text x="100" y="40" text-anchor="middle" class="label">CoreProtectFix</text>
+    <text x="100" y="72" text-anchor="middle" class="body">Async chat bridge</text>
+    <text x="100" y="98" text-anchor="middle" class="body">Event compatibility</text>
+  </g>
+  <g transform="translate(560, 150)">
+    <rect class="node" width="200" height="120" />
+    <text x="100" y="40" text-anchor="middle" class="label">CoreProtect</text>
+    <text x="100" y="72" text-anchor="middle" class="body">Logging database</text>
+    <text x="100" y="98" text-anchor="middle" class="body">Rollback &amp; audit</text>
+  </g>
+  <path class="arrow" d="M240 210 H300" />
+  <path class="arrow" d="M500 210 H560" />
+  <text x="270" y="196" text-anchor="middle" class="body" fill="#f8fafc">Async Chat Events</text>
+  <text x="530" y="196" text-anchor="middle" class="body" fill="#f8fafc">Bridge</text>
+</svg>
