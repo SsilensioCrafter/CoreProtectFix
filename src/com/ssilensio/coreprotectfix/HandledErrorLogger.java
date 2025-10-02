@@ -27,15 +27,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.time.Instant;
-import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 final class HandledErrorLogger {
-
-    private static final String LOG_FILE_NAME = "handled-errors.xml";
-    private static final String ROOT_ELEMENT = "errors";
-    private static final String ENTRY_ELEMENT = "error";
 
     private final Path logFile;
     private final Logger logger;
@@ -45,8 +40,8 @@ final class HandledErrorLogger {
     static HandledErrorLogger tryCreate(Path dataDirectory, Logger logger) {
         try {
             return new HandledErrorLogger(dataDirectory, logger);
-        } catch (IOException | ParserConfigurationException | TransformerException exception) {
-            logger.log(Level.WARNING, "[CoreProtectFix] Failed to initialize handled error log.", exception);
+        } catch (IOException | ParserConfigurationException | TransformerException e) {
+            logger.log(Level.WARNING, "[CoreProtectFix] Failed to initialize handled error log.", e);
             return null;
         }
     }
@@ -55,7 +50,7 @@ final class HandledErrorLogger {
             throws IOException, ParserConfigurationException, TransformerException {
         this.logger = logger;
         Files.createDirectories(dataDirectory);
-        this.logFile = dataDirectory.resolve(LOG_FILE_NAME);
+        this.logFile = dataDirectory.resolve("handled-errors.xml");
         this.factory = createSecureFactory();
         ensureLogDocument();
     }
@@ -68,74 +63,69 @@ final class HandledErrorLogger {
         synchronized (lock) {
             try {
                 Document document = loadDocument();
-                Element root = ensureRoot(document);
-                Element entry = createEntry(document, source, error);
+                Element root = document.getDocumentElement();
+                if (root == null) {
+                    root = document.createElement("errors");
+                    document.appendChild(root);
+                }
+
+                Element entry = document.createElement("error");
+                entry.setAttribute("timestamp", Instant.now().toString());
+
+                entry.appendChild(createTextElement(document, "source", safe(source)));
+                entry.appendChild(createTextElement(document, "type", error.getClass().getName()));
+                entry.appendChild(createTextElement(document, "message", safe(error.getMessage())));
+
+                CDATASection stackTrace = document.createCDATASection(stackTrace(error));
+                Element stackElement = document.createElement("stacktrace");
+                stackElement.appendChild(stackTrace);
+                entry.appendChild(stackElement);
+
                 root.appendChild(entry);
                 writeDocument(document);
-            } catch (IOException | ParserConfigurationException | SAXException | TransformerException exception) {
-                logger.log(Level.WARNING, "[CoreProtectFix] Failed to append handled error log entry.", exception);
+            } catch (IOException | ParserConfigurationException | SAXException | TransformerException ex) {
+                logger.log(Level.WARNING, "[CoreProtectFix] Failed to append handled error log entry.", ex);
             }
         }
     }
 
-    private void ensureLogDocument() throws IOException, ParserConfigurationException, TransformerException {
+    private void ensureLogDocument()
+            throws IOException, ParserConfigurationException, TransformerException {
         DocumentBuilder builder = newDocumentBuilder();
         if (Files.exists(logFile)) {
             try (InputStream in = Files.newInputStream(logFile)) {
                 builder.parse(in);
                 return;
-            } catch (SAXException exception) {
-                // Continue and recreate the document when the existing one is invalid.
+            } catch (SAXException ex) {
+                // Fall through and recreate the document when the existing one is invalid.
             }
         }
 
         Document document = builder.newDocument();
-        document.appendChild(document.createElement(ROOT_ELEMENT));
+        document.appendChild(document.createElement("errors"));
         writeDocument(document);
     }
 
-    private Document loadDocument() throws ParserConfigurationException, IOException, SAXException {
+    private Document loadDocument()
+            throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilder builder = newDocumentBuilder();
         if (Files.notExists(logFile)) {
             Document document = builder.newDocument();
-            document.appendChild(document.createElement(ROOT_ELEMENT));
+            document.appendChild(document.createElement("errors"));
             return document;
         }
 
         try (InputStream inputStream = Files.newInputStream(logFile)) {
             Document document = builder.parse(inputStream);
             Element root = document.getDocumentElement();
-            if (root == null || !ROOT_ELEMENT.equals(root.getNodeName())) {
+            if (root == null || !"errors".equals(root.getNodeName())) {
                 Document fallback = builder.newDocument();
-                fallback.appendChild(fallback.createElement(ROOT_ELEMENT));
+                fallback.appendChild(fallback.createElement("errors"));
                 return fallback;
             }
             root.normalize();
             return document;
         }
-    }
-
-    private Element ensureRoot(Document document) {
-        Element root = document.getDocumentElement();
-        if (root == null) {
-            root = document.createElement(ROOT_ELEMENT);
-            document.appendChild(root);
-        }
-        return root;
-    }
-
-    private Element createEntry(Document document, String source, Throwable error) {
-        Element entry = document.createElement(ENTRY_ELEMENT);
-        entry.setAttribute("timestamp", Instant.now().toString());
-        entry.appendChild(createTextElement(document, "source", safe(source)));
-        entry.appendChild(createTextElement(document, "type", error.getClass().getName()));
-        entry.appendChild(createTextElement(document, "message", safe(error.getMessage())));
-
-        CDATASection stackTrace = document.createCDATASection(stackTrace(error));
-        Element stackElement = document.createElement("stacktrace");
-        stackElement.appendChild(stackTrace);
-        entry.appendChild(stackElement);
-        return entry;
     }
 
     private void writeDocument(Document document) throws TransformerException, IOException {
@@ -156,7 +146,7 @@ final class HandledErrorLogger {
     }
 
     private String safe(String value) {
-        return Objects.toString(value, "");
+        return value == null ? "" : value;
     }
 
     private DocumentBuilder newDocumentBuilder() throws ParserConfigurationException {
