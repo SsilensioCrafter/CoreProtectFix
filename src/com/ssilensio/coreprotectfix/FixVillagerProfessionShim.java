@@ -17,40 +17,52 @@ final class FixVillagerProfessionShim implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
-    public void onDeath(EntityDeathEvent e) {
-        Entity ent = e.getEntity();
+    public void onDeath(EntityDeathEvent event) {
+        Entity entity = event.getEntity();
 
         try {
-            if (ent instanceof Villager villager && plugin.getConfig().getBoolean("affect-villagers", true)) {
-                safeSetVillagerProfession(villager, Villager.Profession.NONE);
-            } else if (ent instanceof ZombieVillager zv && plugin.getConfig().getBoolean("affect-zombie-villagers", true)) {
-                safeSetZombieVillagerProfession(zv, Villager.Profession.NONE);
+            if (entity instanceof Villager villager) {
+                neutralizeVillager(villager);
+            } else if (entity instanceof ZombieVillager zombieVillager) {
+                neutralizeZombieVillager(zombieVillager);
             }
         } catch (Throwable ex) {
-            if (plugin.debug()) {
-                plugin.getLogger().warning("[VillagerShim] Failed to neutralize profession: "
-                        + ex.getClass().getSimpleName() + ": " + ex.getMessage());
-            }
+            plugin.logWarning("Failed to neutralize villager profession: "
+                    + ex.getClass().getSimpleName() + ": " + ex.getMessage());
             plugin.logHandledError("VillagerShim:onDeath", ex);
         }
     }
 
-    private void safeSetVillagerProfession(Villager villager, Villager.Profession p) {
+    private void neutralizeVillager(Villager villager) {
+        if (!plugin.getConfig().getBoolean("affect-villagers", true)) {
+            return;
+        }
+        safeSetProfession(villager, Villager.Profession.NONE);
+    }
+
+    private void neutralizeZombieVillager(ZombieVillager zombieVillager) {
+        if (!plugin.getConfig().getBoolean("affect-zombie-villagers", true)) {
+            return;
+        }
+        safeSetZombieProfession(zombieVillager, Villager.Profession.NONE);
+    }
+
+    private void safeSetProfession(Villager villager, Villager.Profession profession) {
         try {
-            if (villager.getProfession() != p) {
-                villager.setProfession(p);
-                if (plugin.debug()) plugin.getLogger().info("[VillagerShim] Villager profession set to " + p);
+            if (villager.getProfession() != profession) {
+                villager.setProfession(profession);
+                plugin.logDebug("Villager profession set to " + profession);
             }
         } catch (Throwable ex) {
             plugin.logHandledError("VillagerShim:safeSetVillagerProfession", ex);
         }
     }
 
-    private void safeSetZombieVillagerProfession(ZombieVillager zv, Villager.Profession p) {
+    private void safeSetZombieProfession(ZombieVillager zombieVillager, Villager.Profession profession) {
         try {
-            if (zv.getVillagerProfession() != p) {
-                zv.setVillagerProfession(p);
-                if (plugin.debug()) plugin.getLogger().info("[VillagerShim] ZombieVillager profession set to " + p);
+            if (zombieVillager.getVillagerProfession() != profession) {
+                zombieVillager.setVillagerProfession(profession);
+                plugin.logDebug("ZombieVillager profession set to " + profession);
             }
         } catch (Throwable ex) {
             plugin.logHandledError("VillagerShim:safeSetZombieVillagerProfession", ex);
