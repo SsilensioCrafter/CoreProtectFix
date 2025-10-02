@@ -1,0 +1,19 @@
+# Build output
+/target/
+
+# IDE metadata
+/.idea/
+/.vscode/
+*.iml
+
+# Local tooling archives and binaries
+*.jar
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z
+
+# OS files
+.DS_Store
+Thumbs.db
