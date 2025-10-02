@@ -2,15 +2,6 @@ package com.ssilensio.coreprotectfix;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class CoreProtectFixPlugin extends JavaPlugin {
-
-    private static final String[] BANNER_LINES = new String[] {
-            "\u001B[36m  ██████╗   ██████╗  ███████╗ ██╗ ██╗  ██╗\u001B[0m",
-            "\u001B[36m ██╔════╝  ██╔═══██╗ ██╔════╝ ██║ ╚██╗██╔╝\u001B[0m",
-            "\u001B[36m ██║       ██║   ██║ █████╗   ██║  ╚███╔╝ \u001B[0m",
-            "\u001B[36m ██║       ██║   ██║ ██╔══╝   ██║  ██╔██╗ \u001B[0m",
-            "\u001B[36m ╚██████╗  ╚██████╔╝ ██║      ██║ ██╔╝ ██╗\u001B[0m",
-            "\u001B[36m  ╚═════╝   ╚═════╝  ╚═╝      ╚═╝ ╚═╝  ╚═╝\u001B[0m"
     };
 
     private HandledErrorLogger handledErrorLogger;
