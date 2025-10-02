@@ -31,6 +31,7 @@ final class FixVillagerProfessionShim implements Listener {
                 plugin.getLogger().warning("[VillagerShim] Failed to neutralize profession: "
                         + ex.getClass().getSimpleName() + ": " + ex.getMessage());
             }
+            plugin.logHandledError("VillagerShim:onDeath", ex);
         }
     }
 
@@ -40,7 +41,9 @@ final class FixVillagerProfessionShim implements Listener {
                 villager.setProfession(p);
                 if (plugin.debug()) plugin.getLogger().info("[VillagerShim] Villager profession set to " + p);
             }
-        } catch (Throwable ignored) { }
+        } catch (Throwable ex) {
+            plugin.logHandledError("VillagerShim:safeSetVillagerProfession", ex);
+        }
     }
 
     private void safeSetZombieVillagerProfession(ZombieVillager zv, Villager.Profession p) {
@@ -49,6 +52,8 @@ final class FixVillagerProfessionShim implements Listener {
                 zv.setVillagerProfession(p);
                 if (plugin.debug()) plugin.getLogger().info("[VillagerShim] ZombieVillager profession set to " + p);
             }
-        } catch (Throwable ignored) { }
+        } catch (Throwable ex) {
+            plugin.logHandledError("VillagerShim:safeSetZombieVillagerProfession", ex);
+        }
     }
 }
