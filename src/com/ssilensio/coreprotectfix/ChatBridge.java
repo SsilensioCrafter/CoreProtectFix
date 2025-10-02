@@ -71,6 +71,9 @@ final class ChatBridge implements Listener {
                 plugin.getLogger().warning("[CP Bridge] CoreProtect API call failed: "
                         + ex.getClass().getSimpleName() + ": " + ex.getMessage());
             }
+            if (plugin instanceof CoreProtectFixPlugin coreProtectFixPlugin) {
+                coreProtectFixPlugin.logHandledError("ChatBridge:onChat", ex);
+            }
         }
     }
 }

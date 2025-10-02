@@ -1,7 +1,5 @@
 # CoreProtectFix
 
-![CoreProtectFix chat bridge diagram](docs/overview.svg)
-
 ## Overview
 CoreProtectFix keeps the CoreProtect database compatible with modern chat pipelines on Paper, Spigot, and hybrid servers such as ArcLight. It replaces the deprecated synchronous chat hooks used by CoreProtect with an asynchronous bridge so that messages recorded in CoreProtect remain accurate even when your server relies on Paper's `AsyncChatEvent`.
 
@@ -10,6 +8,7 @@ CoreProtectFix keeps the CoreProtect database compatible with modern chat pipeli
 - **CoreProtect integration** – forwards player chat to CoreProtect without requiring upstream changes.
 - **Server agnostic** – works alongside standard plugins and modded platforms such as ArcLight.
 - **Drop-in fix** – install alongside CoreProtect with no configuration required for most setups.
+- **Handled error visibility** – suppressed compatibility exceptions are recorded in `plugins/CoreProtectFix/handled-errors.xml` for review.
 
 ## Requirements
 - Java 17 or newer.
@@ -43,9 +42,8 @@ The resulting JAR will be placed in `target/CoreProtectFix-<version>.jar`.
 Due to licensing, the Spigot and Paper API artifacts are not hosted on Maven Central. If you build locally, make sure you have installed the required server APIs in your local Maven cache using the official BuildTools or download service.
 
 ## Project structure
-- `src/main/java/com/ssilensio/coreprotectfix/` – Plugin source code and compatibility helpers.
-- `src/main/resources/` – Plugin metadata (`plugin.yml`).
-- `docs/overview.svg` – Architecture diagram used in this README.
+- `src/com/ssilensio/coreprotectfix/` – Plugin source code and compatibility helpers.
+- `src/resources/` – Plugin metadata (`plugin.yml`, configuration stubs, etc.).
 
 ## Contributing
 1. Fork the repository and create a branch for your fix or feature.
