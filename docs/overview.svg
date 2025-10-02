@@ -1,44 +1,86 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400">
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="480" viewBox="0 0 960 480" role="img" aria-labelledby="title desc">
+  <title id="title">CoreProtectFix architecture overview</title>
+  <desc id="desc">Diagram describing how CoreProtectFix bridges player chat events into the CoreProtect database.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#0f172a" />
-      <stop offset="100%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#111827" />
     </linearGradient>
+    <linearGradient id="node" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#0ea5e9" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#a855f7" />
+      <stop offset="100%" stop-color="#6366f1" />
+    </linearGradient>
+    <clipPath id="card">
+      <rect x="0" y="0" width="280" height="200" rx="24" />
+    </clipPath>
     <style>
-      .title { font: 700 42px 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; fill: #f8fafc; }
-      .subtitle { font: 400 22px 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; fill: #cbd5f5; }
-      .label { font: 600 18px 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; fill: #0f172a; }
-      .body { font: 400 16px 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; fill: #0f172a; }
-      .node { fill: #e2e8f0; stroke: #1e293b; stroke-width: 2; rx: 18; }
-      .arrow { fill: none; stroke: #f8fafc; stroke-width: 3; marker-end: url(#arrowhead); }
+      text { font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; }
+      .heading { font-size: 42px; font-weight: 700; fill: #f8fafc; }
+      .tagline { font-size: 22px; fill: #cbd5f5; letter-spacing: 0.04em; }
+      .label { font-size: 20px; font-weight: 600; fill: #0f172a; }
+      .body { font-size: 16px; fill: #0f172a; }
+      .arrow { stroke: #f8fafc; stroke-width: 4; fill: none; marker-end: url(#arrowhead); }
+      .arrow-label { font-size: 16px; fill: #f8fafc; font-weight: 500; }
     </style>
-    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#f8fafc" />
+    <marker id="arrowhead" markerWidth="12" markerHeight="8" refX="12" refY="4" orient="auto">
+      <polygon points="0 0, 12 4, 0 8" fill="#f8fafc" />
     </marker>
   </defs>
-  <rect width="800" height="400" fill="url(#bg)" rx="32" />
-  <text x="50" y="80" class="title">CoreProtectFix</text>
-  <text x="50" y="120" class="subtitle">Bridge CoreProtect with modern chat pipelines</text>
-  <g transform="translate(40, 150)">
-    <rect class="node" width="200" height="120" />
-    <text x="100" y="40" text-anchor="middle" class="label">Minecraft Server</text>
-    <text x="100" y="72" text-anchor="middle" class="body">Spigot / Paper</text>
-    <text x="100" y="98" text-anchor="middle" class="body">1.20+</text>
+  <rect width="960" height="480" fill="url(#bg)" rx="36" />
+  <g transform="translate(60 72)">
+    <text class="heading">CoreProtectFix</text>
+    <text class="tagline" y="44">Modern chat bridge for the CoreProtect ecosystem</text>
   </g>
-  <g transform="translate(300, 150)">
-    <rect class="node" width="200" height="120" />
-    <text x="100" y="40" text-anchor="middle" class="label">CoreProtectFix</text>
-    <text x="100" y="72" text-anchor="middle" class="body">Async chat bridge</text>
-    <text x="100" y="98" text-anchor="middle" class="body">Event compatibility</text>
+  <g transform="translate(70 150)">
+    <g clip-path="url(#card)">
+      <rect width="280" height="200" fill="#e2e8f0" />
+      <rect width="280" height="88" fill="url(#node)" />
+      <g transform="translate(140 50)" text-anchor="middle">
+        <text fill="#0f172a" font-size="34" font-weight="700">Players</text>
+      </g>
+      <g transform="translate(140 124)" text-anchor="middle">
+        <text class="label">Minecraft Server</text>
+        <text class="body" y="28">Paper · Spigot · ArcLight</text>
+      </g>
+    </g>
   </g>
-  <g transform="translate(560, 150)">
-    <rect class="node" width="200" height="120" />
-    <text x="100" y="40" text-anchor="middle" class="label">CoreProtect</text>
-    <text x="100" y="72" text-anchor="middle" class="body">Logging database</text>
-    <text x="100" y="98" text-anchor="middle" class="body">Rollback &amp; audit</text>
+  <g transform="translate(340 150)">
+    <g clip-path="url(#card)">
+      <rect width="280" height="200" fill="#ede9fe" />
+      <rect width="280" height="88" fill="url(#accent)" />
+      <g transform="translate(140 52)" text-anchor="middle">
+        <text fill="#0f172a" font-size="32" font-weight="700">CoreProtectFix</text>
+      </g>
+      <g transform="translate(140 124)" text-anchor="middle">
+        <text class="label">Async chat bridge</text>
+        <text class="body" y="26">Wraps Paper and legacy APIs</text>
+        <text class="body" y="48">Normalizes payloads for CoreProtect</text>
+      </g>
+    </g>
   </g>
-  <path class="arrow" d="M240 210 H300" />
-  <path class="arrow" d="M500 210 H560" />
-  <text x="270" y="196" text-anchor="middle" class="body" fill="#f8fafc">Async Chat Events</text>
-  <text x="530" y="196" text-anchor="middle" class="body" fill="#f8fafc">Bridge</text>
+  <g transform="translate(610 150)">
+    <g clip-path="url(#card)">
+      <rect width="280" height="200" fill="#f8fafc" />
+      <rect width="280" height="88" fill="#38bdf8" />
+      <g transform="translate(140 52)" text-anchor="middle">
+        <text fill="#0f172a" font-size="32" font-weight="700">CoreProtect</text>
+      </g>
+      <g transform="translate(140 124)" text-anchor="middle">
+        <text class="label">Database &amp; rollback</text>
+        <text class="body" y="26">Receives sanitized chat events</text>
+        <text class="body" y="48">Keeps audit trail intact</text>
+      </g>
+    </g>
+  </g>
+  <path class="arrow" d="M280 240 H340"/>
+  <path class="arrow" d="M550 240 H610"/>
+  <text class="arrow-label" x="310" y="220" text-anchor="middle">Async chat payload</text>
+  <text class="arrow-label" x="580" y="220" text-anchor="middle">Normalized event</text>
+  <g transform="translate(480 372)" text-anchor="middle">
+    <text class="arrow-label">Seamless auditing without patching CoreProtect</text>
+  </g>
 </svg>

@@ -1,6 +1,6 @@
 # CoreProtectFix
 
-![CoreProtectFix chat bridge diagram](docs/overview.svg)
+![CoreProtectFix architecture overview](docs/overview.svg)
 
 ## Overview
 CoreProtectFix keeps the CoreProtect database compatible with modern chat pipelines on Paper, Spigot, and hybrid servers such as ArcLight. It replaces the deprecated synchronous chat hooks used by CoreProtect with an asynchronous bridge so that messages recorded in CoreProtect remain accurate even when your server relies on Paper's `AsyncChatEvent`.
