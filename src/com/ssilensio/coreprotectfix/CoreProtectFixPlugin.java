@@ -2,18 +2,6 @@ package com.ssilensio.coreprotectfix;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.logging.Level;
-
-public final class CoreProtectFixPlugin extends JavaPlugin {
-
-    private static final String[] BANNER_LINES = new String[] {
-            "\u001B[36m   ██████╗  ██████╗ ██████╗ ███████╗██████╗ ██████╗ ███████╗████████╗\u001B[0m",
-            "\u001B[36m   ██╔══██╗██╔════╝██╔═══██╗██╔════╝██╔══██╗██╔══██╗██╔════╝╚══██╔══╝\u001B[0m",
-            "\u001B[36m   ██████╔╝██║     ██║   ██║█████╗  ██████╔╝██████╔╝█████╗     ██║   \u001B[0m",
-            "\u001B[36m   ██╔══██╗██║     ██║   ██║██╔══╝  ██╔══██╗██╔══██╗██╔══╝     ██║   \u001B[0m",
-            "\u001B[36m   ██║  ██║╚██████╗╚██████╔╝███████╗██║  ██║██║  ██║███████╗   ██║   \u001B[0m",
-            "\u001B[36m   ╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝   ╚═╝   \u001B[0m",
-            "\u001B[35m      CoreProtectFix — bridging CoreProtect with modern chat APIs\u001B[0m"
     };
 
     private HandledErrorLogger handledErrorLogger;
@@ -65,6 +53,5 @@ public final class CoreProtectFixPlugin extends JavaPlugin {
         for (String line : BANNER_LINES) {
             System.out.println(line);
         }
-        getLogger().log(Level.INFO, "[CoreProtectFix] Banner printed to console.");
     }
 }
